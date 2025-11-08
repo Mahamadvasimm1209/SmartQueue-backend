@@ -8,7 +8,22 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 const app = express();
-app.use(cors());
+
+// ✅ Enhanced CORS setup (important for Vercel + Render)
+const allowedOrigins = [
+  "http://localhost:3000", // local dev
+  "https://smart-queue-frontend-vf9z-ml0zji0ho.vercel.app" // your live Vercel domain
+];
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+    methods: ["GET", "POST", "DELETE"],
+    credentials: true,
+  })
+);
+
+
 app.use(bodyParser.json());
 
 const server = http.createServer(app);
